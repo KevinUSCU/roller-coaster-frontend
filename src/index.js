@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 
+import thunk from 'redux-thunk'
+
 import './index.css';
 import App from './components/App';
 import reducers from './reducers'
 import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(reducers)
+import { fetchRollerCoasters } from './actions'
+
+const store = createStore(reducers, applyMiddleware(thunk))
+
+store.dispatch(fetchRollerCoasters())
 
 ReactDOM.render(
   <Provider store={store}>
