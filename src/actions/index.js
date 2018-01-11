@@ -30,3 +30,17 @@ export function updateRow(coasterId){
     payload: coasterId
   }
 }
+
+//-------------------------------------
+
+async function request(path, method = 'GET', body = null) {
+  if (body) body = JSON.stringify(body)
+  return await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: body
+  })
+}
