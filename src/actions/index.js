@@ -3,6 +3,15 @@ export const DELETE_ROLLER_COASTER = 'DELETE_ROLLER_COASTER'
 export const UPDATE_ROLLER_COASTER = 'UPDATE_ROLLER_COASTER'
 export const UPDATE_ROW = 'UPDATE_ROW'
 
+export function fetchRollerCoasters() {
+  return (dispatch) => {
+    const res = request('/api/rollercoasters')
+    console.log(res)
+  }
+}
+
+//-----------------------------------
+
 export function addRollerCoaster(coaster){
   return {
     type: ADD_ROLLER_COASTER,
