@@ -3,34 +3,51 @@ export const DELETE_ROLLER_COASTER = 'DELETE_ROLLER_COASTER'
 export const UPDATE_ROLLER_COASTER = 'UPDATE_ROLLER_COASTER'
 export const UPDATE_ROW = 'UPDATE_ROW'
 
+export const FETCH_ROLLER_COASTERS_SUCCESS = 'FETCH_ROLLER_COASTERS_SUCCESS'
+
 export function fetchRollerCoasters() {
-  return (dispatch) => {
-    const res = request('/api/rollercoasters')
-    console.log(res)
+  return async (dispatch) => {
+    const res = await request('/api/rollercoasters')
+    const json = await res.json()
+    dispatch ( {
+      type: FETCH_ROLLER_COASTERS_SUCCESS,
+      payload: json.roller_coasters
+    } )
   }
 }
 
 //-----------------------------------
 
 export function addRollerCoaster(coaster){
-  return {
-    type: ADD_ROLLER_COASTER,
-    payload: coaster
+  return async (dispatch) => {
+    await request('/api/rollercoasters', 'POST', coaster)
+    // const res = await request('/api/rollercoasters', 'POST', coaster)
+    // const json = await res.json()
+    dispatch(fetchRollerCoasters())
   }
 }
 
 export function deleteRollerCoaster(coasterId){
-  return {
-    type: DELETE_ROLLER_COASTER,
-    payload: coasterId
+  return async (dispatch) => {
+    await request(`/api/rollercoasters/${coasterId}`, 'DELETE')
+    dispatch(fetchRollerCoasters())
   }
+  // return {
+  //   type: DELETE_ROLLER_COASTER,
+  //   payload: coasterId
+  // }
 }
 
 export function updateRollerCoaster(coaster){
-  return {
-    type: UPDATE_ROLLER_COASTER,
-    payload: coaster
+  return async(dispatch) => {
+    await request(`/api/rollercoasters/${coaster.id}`, 'PUT', coaster)
+    dispatch(fetchRollerCoasters())
+    dispatch(updateRow(null))
   }
+  // return {
+  //   type: UPDATE_ROLLER_COASTER,
+  //   payload: coaster
+  // }
 }
 
 export function updateRow(coasterId){
