@@ -18,7 +18,7 @@ class RollerCoasterTableAddContent extends Component{
     const {target: {name, value} } = event
 
     if(this.state.hasOwnProperty(name)){
-      this.setState( { [name]: value } )
+      this.setState( { [name]: value } ) //the [] around name are an ES6 feature which in this context is the value of the key name (so below, on line 36 it's 'name', on 39 it's 'park', etc.)
     }
   }
 
